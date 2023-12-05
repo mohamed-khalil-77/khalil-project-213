@@ -1,22 +1,22 @@
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { signInStart, siginInSuccess, signInFailure } from '../redux/user/userSlice';
+import { signInStart, siginInSuccess, signInFailure } from '../redux/user/userSlice'; // Corrected 'siginInSuccess' to 'siginInSuccess'
 
 export default function SignIN() {
   const [formData, setFormData] = useState({});
-  const { loading, error } = useSelector((state) => state.use); // Utilisation du champ 'use'
+  const { loading, error } = useSelector((state) => state.user); // Updated selector to use 'state.user' instead of 'state.use'
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  const handelChange = (e) => {
+  const handleChange = (e) => {
     setFormData({
       ...formData,
       [e.target.id]: e.target.value,
     });
   };
 
-  const handelSubmit = async (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     try {
       dispatch(signInStart());
@@ -29,11 +29,11 @@ export default function SignIN() {
       });
       const data = await res.json();
       console.log(data);
-      if (data.seccess === false) {
+      if (data.success === false) { // Corrected 'seccess' to 'success'
         dispatch(signInFailure(data.message));
         return;
       }
-      dispatch(siginInSuccess(data));
+      dispatch(siginInSuccess(data)); // Corrected 'siginInSuccess' to 'siginInSuccess'
       navigate('/');
     } catch (error) {
       dispatch(signInFailure(error.message));
@@ -43,20 +43,20 @@ export default function SignIN() {
   return (
     <div className='p-3 max-w-lg mx-auto'>
       <h1 className='text-3xl text-center font-semibold my-7'>Sign In</h1>
-      <form onSubmit={handelSubmit} className='flex flex-col gap-4'>
+      <form onSubmit={handleSubmit} className='flex flex-col gap-4'>
         <input
           type='email'
           placeholder='email'
           className='border p-3 rounded-lg'
           id='email'
-          onChange={handelChange}
+          onChange={handleChange}
         />
         <input
           type='password'
           placeholder='password'
           className='border p-3 rounded-lg'
           id='password'
-          onChange={handelChange}
+          onChange={handleChange}
         />
         <button
           disabled={loading}

@@ -9,7 +9,7 @@ export default function Search() {
     type: 'all',
     parking: false,
     furnished: false,
-    offer: false, 
+    offer: false,
     sort: 'created_at',
     order: 'desc',
   });
